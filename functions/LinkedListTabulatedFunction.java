@@ -200,7 +200,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
             return Double.NaN;
         }
 
-        FunctionNode current = (lastNode != null) ? lastNode : head.nextEl;
+        FunctionNode current = head.nextEl;
 
          while (current != head){
             double currentX = current.point.get_x();
@@ -208,19 +208,20 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
             if (Math.abs(x - currentX) < 1e-10) {
                 return current.point.get_y();
             }
-        
-        if (current.nextEl != head) {
-            double nextX = current.nextEl.point.get_x();
+            current = current.nextEl;
+         }
+        current = head.nextEl;
+        while (current.nextEl != head && current.nextEl != head) {
+            double x1 = current.point.get_x();
+            double x2 = current.nextEl.point.get_x();
             
-            if (x > currentX && x < nextX){
+            if (x >  x1  && x <  x2 ){
                 double y1 = current.point.get_y();
                 double y2 = current.nextEl.point.get_y();
-                return y1 + (y2 - y1) * (x - currentX) / (nextX - currentX);
+                return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
             }
+            current=current.nextEl;
         }
-
-        current=current.nextEl;
-    }
     return Double.NaN;
     }
 
